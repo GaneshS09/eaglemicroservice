@@ -11,7 +11,6 @@ plugins {
 }
 
 rootProject.name = "eaglemicroservices"
-include("lib")
 
 
 include("discovery-server")
