@@ -15,3 +15,4 @@ rootProject.name = "eaglemicroservices"
 
 include("discovery-server")
 include("user-service")
+include("common-proto")

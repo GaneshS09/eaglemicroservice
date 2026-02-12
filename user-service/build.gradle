@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '4.0.2'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -11,31 +11,26 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('springCloudVersion', "2025.1.0")
-}
-
 dependencies {
+
+    implementation project(':common-proto')
+
     // ===================
     // gRpc Server
     // ===================
     implementation 'net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE'
 
     // ===================
-    // Eureka Client
+    // Database connection
     // ===================
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:r2dbc-postgresql'
 
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
 }
 
 test {

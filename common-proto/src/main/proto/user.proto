@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "GlobalUserProto";
+
+package com.eagle.user;
+
+message GlobalUser{
+
+	string id = 1;
+	string fullname = 2;
+	string dob = 3;
+	string username = 4;
+	string email = 5;
+	int64 mobile = 6;
+	repeated GlobalUserRole globaluserrole = 7;
+	map<string, string> addressMap = 8;
+	bool active = 9;
+	bool accountNonExpired = 10;
+	bool accountNonLocked = 11;
+	bool credentialsNonExpired = 12;
+	bytes profilePicture = 13;
+}
+
+
+message CreateUserRequest{
+	string id = 1;
+	string fullname = 2;
+	string dob = 3;
+	string username = 4;
+	string email = 5;
+	string password = 6;
+	int64 mobile = 7;
+	repeated GlobalUserRole globaluserrole = 8;
+	map<string, string> addressMap = 9;
+	bool active = 10;
+	bool accountNonExpired = 11;
+	bool accountNonLocked = 12;
+	bool credentialsNonExpired = 13;
+	bytes profilePicture = 14;
+	//google.protobuf.Timestamp createdDate = 14;
+}
+
+message UpdateUserRequest{
+	string id = 1;
+	string fullname = 2;
+	string dob = 3;
+	string email = 4;
+	int64 mobile = 5;
+	repeated GlobalUserRole globaluserrole = 6;
+	map<string, string> addressMap = 7;
+	bool active = 8;
+	bool accountNonExpired = 9;
+	bool accountNonLocked = 10;
+	bool credentialsNonExpired = 11;
+	bytes profilePicture = 12;
+}
+
+message GlobalUserRole{
+	int64 id = 1;
+	string rolename = 2;
+}
+
+message Empty{}
+
+message UserIdRequest {
+    string id = 1;
+}
+
+message UserList{
+	repeated GlobalUser globaluser = 1;
+}
+
+message UserToken{
+	string token = 1;
+}
+
+message TokenUsernameRequest{
+	string username = 1;
+}
+
+message TokenUsernameResponse{
+	string id = 1;
+    string username = 2;
+    string password = 3;
+    repeated GlobalUserRole globaluserrole = 4;
+    bool active = 5;
+    bool accountNonExpired = 6;
+    bool accountNonLocked = 7;
+    bool credentialsNonExpired = 8;
+}
+
+message UpdatePasswordRequest{
+	string username = 1;
+	string newPassword = 2;
+}
+
+service GlobalUserService{
+
+	// get all global user
+	rpc getAllGlobalUsers(Empty) returns (UserList);
+
+	// get global user by id
+	rpc getGlobalUser(UserIdRequest) returns (UserList);
+
+	// add an GlobalUser
+	rpc addGlobalUser(CreateUserRequest) returns (UserList);
+
+	// update GlobalUser
+	rpc updateGlobalUser(UpdateUserRequest) returns (UserList);
+
+	// delete GlobalUsesr
+	rpc deleteGlobalUser(UserIdRequest) returns (Empty);
+
+	rpc getGlobalUserToken(UserToken) returns (UserList);
+
+	rpc getUserNameForToken(TokenUsernameRequest) returns (TokenUsernameResponse);
+
+	rpc updateUserPassword(UpdatePasswordRequest) returns (Empty);
+
+}
