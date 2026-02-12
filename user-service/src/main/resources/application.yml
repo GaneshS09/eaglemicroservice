@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: user-service
+
+grpc:
+  server:
+    port: 9090
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    prefer-ip-address: true
+    metadata-map:
+      grpc.port: 9090
